@@ -106,7 +106,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
+        view.backgroundColor = .white
+        configureNavBar()
         configureConstraints()
+    }
+    
+    private func configureNavBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3"), style: .plain, target: self, action: #selector(showSettings(_:)))
+    }
+    
+    @objc
+    private func showSettings(_ sender: UIBarButtonItem) {
+        let settingsVC = SettingsViewController()
+        navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @IBAction func animateSquareUp(sender: UIButton) {
@@ -197,8 +209,7 @@ class ViewController: UIViewController {
         distanceStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             distanceStepper.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            distanceStepper.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
+            distanceStepper.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
     }
     
@@ -257,4 +268,3 @@ class ViewController: UIViewController {
         ])
     }
 }
-
