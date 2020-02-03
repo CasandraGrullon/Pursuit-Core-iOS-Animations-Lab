@@ -8,10 +8,19 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+enum AnimationStyle: Int {
+    case curveEaseIn = 0
+    case curveEaseOut = 16
+    case repeated = 8
+    case curveLinear = 196608
+}
 
-    private var animations = ["curveEaseIn", "curveEaseOut", "curveLinear", "autoReverse", "transitionFlipLeft"]
+class SettingsViewController: UIViewController {
+    
+    private var animations = ["curveEaseIn", "curveEaseOut", "repeat", "curveLinear"]
+    
     public var selectedStyle: String?
+    
     public var pickerView: UIPickerView = {
        let pv = UIPickerView()
         return pv
@@ -34,6 +43,7 @@ class SettingsViewController: UIViewController {
 
         ])
     }
+        
 }
 extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -50,5 +60,7 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let style = animations[row]
         selectedStyle = style
+        
+        
     }
 }
