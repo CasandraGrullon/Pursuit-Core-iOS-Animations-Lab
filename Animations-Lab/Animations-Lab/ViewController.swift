@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         button.setTitle("Left", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .orange
-        //TODO: add control
+        button.addTarget(self, action: #selector(animateSquareLeft(sender:)), for: .touchUpInside)
         return button
     }()
     lazy var rightButton: UIButton = {
@@ -52,7 +52,7 @@ class ViewController: UIViewController {
         button.setTitle("Right", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .orange
-        //TODO: add control
+        button.addTarget(self, action: #selector(animateSquareRight(sender:)), for: .touchUpInside)
         return button
     }()
     lazy var stepper: UIStepper = {
@@ -94,8 +94,22 @@ class ViewController: UIViewController {
     }
     
     @IBAction func animateSquareDown(sender: UIButton) {
-        let oldOffet = blueSquareCenterYConstraint.constant
-        blueSquareCenterYConstraint.constant = oldOffet + 150
+        let oldOffset = blueSquareCenterYConstraint.constant
+        blueSquareCenterYConstraint.constant = oldOffset + 150
+        UIView.animate(withDuration: 2) { [unowned self] in
+            self.view.layoutIfNeeded()
+        }
+    }
+    @IBAction func animateSquareLeft(sender: UIButton) {
+        let oldOffset = blueSquareCenterXConstraint.constant
+        blueSquareCenterXConstraint.constant = oldOffset - 150
+        UIView.animate(withDuration: 2) { [unowned self] in
+            self.view.layoutIfNeeded()
+        }
+    }
+    @IBAction func animateSquareRight(sender: UIButton) {
+        let oldOffset = blueSquareCenterXConstraint.constant
+        blueSquareCenterXConstraint.constant = oldOffset + 150
         UIView.animate(withDuration: 2) { [unowned self] in
             self.view.layoutIfNeeded()
         }
@@ -147,7 +161,6 @@ class ViewController: UIViewController {
         downButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         downButton.leadingAnchor.constraint(equalTo: rightButton.trailingAnchor, constant: 10).isActive = true
         downButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
-        
     }
     private func constrainBlueSquare() {
         blueSquare.translatesAutoresizingMaskIntoConstraints = false
