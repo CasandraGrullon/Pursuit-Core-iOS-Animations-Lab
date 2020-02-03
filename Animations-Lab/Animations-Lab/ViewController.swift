@@ -15,7 +15,6 @@ class ViewController: UIViewController {
         view.backgroundColor = .blue
         return view
     }()
-    
     lazy var buttonStackView: UIStackView = {
        let buttonStack = UIStackView()
         buttonStack.axis = .horizontal
@@ -24,24 +23,38 @@ class ViewController: UIViewController {
         buttonStack.spacing = 30
         return buttonStack
     }()
-    
     lazy var upButton: UIButton = {
        let button = UIButton()
-        button.setTitle("Move square up", for: .normal)
+        button.setTitle("Up", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .cyan
         button.addTarget(self, action: #selector(animateSquareUp(sender:)), for: .touchUpInside)
         return button
     }()
-    
     lazy var downButton: UIButton = {
        let button = UIButton()
-        button.setTitle("Move square down", for: .normal)
+        button.setTitle("Down", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.backgroundColor = .cyan
         button.addTarget(self, action: #selector(animateSquareDown(sender:)), for: .touchUpInside)
         return button
     }()
+    lazy var leftButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Left", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .orange
+        return button
+        
+    }()
+    lazy var stepper: UIStepper = {
+       let step = UIStepper()
+        step.maximumValue = 10
+        step.minimumValue = 1
+        return step
+    }()
+    
+
     
     lazy var blueSquareHeightConstaint: NSLayoutConstraint = {
         blueSquare.heightAnchor.constraint(equalToConstant: 200)
