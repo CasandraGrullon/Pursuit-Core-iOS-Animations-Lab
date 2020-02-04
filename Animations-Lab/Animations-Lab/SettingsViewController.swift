@@ -15,11 +15,18 @@ enum AnimationStyle: Int {
     case curveLinear = 196608
 }
 
+protocol AnimationStyleDelegate: AnyObject {
+    func didSelectAnimationStyle(style: AnimationStyle.RawValue)
+}
+
 class SettingsViewController: UIViewController {
     
     private var animations = ["curveEaseIn", "curveEaseOut", "repeat", "curveLinear"]
     
     public var selectedStyle: String?
+    public var animationStyle: Int?
+    
+    weak var delegate: AnimationStyleDelegate?
     
     public var pickerView: UIPickerView = {
        let pv = UIPickerView()
@@ -40,7 +47,6 @@ class SettingsViewController: UIViewController {
         NSLayoutConstraint.activate([
             pickerView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             pickerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
-
         ])
     }
         
@@ -61,6 +67,19 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         let style = animations[row]
         selectedStyle = style
         
+        if selectedStyle == "curveEaseIn" {
+            animationStyle = AnimationStyle.curveEaseIn.rawValue
+            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+        } else if selectedStyle == "curveEaseOut" {
+            animationStyle = AnimationStyle.curveEaseOut.rawValue
+            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+        } else if selectedStyle == "repeat" {
+            animationStyle = AnimationStyle.repeated.rawValue
+            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+        } else if selectedStyle == "curveLinear" {
+            animationStyle = AnimationStyle.curveLinear.rawValue
+            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+        }
         
     }
 }

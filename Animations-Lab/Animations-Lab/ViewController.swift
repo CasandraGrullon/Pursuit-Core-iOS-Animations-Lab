@@ -74,6 +74,7 @@ class ViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
+    
     lazy var distanceStepper: UIStepper = {
         let step = UIStepper()
         step.maximumValue = 100
@@ -118,6 +119,7 @@ class ViewController: UIViewController {
     @objc
     private func showSettings(_ sender: UIBarButtonItem) {
         let settingsVC = SettingsViewController()
+        settingsVC.delegate = self
         navigationController?.pushViewController(settingsVC, animated: true)
     }
     
@@ -267,4 +269,11 @@ class ViewController: UIViewController {
             buttonStackView.widthAnchor.constraint(equalTo: view.widthAnchor),
         ])
     }
+}
+extension ViewController: AnimationStyleDelegate {
+    func didSelectAnimationStyle(style: AnimationStyle.RawValue) {
+        <#code#>
+    }
+    
+    
 }
