@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
+    var animationStyle: String?
     
     lazy var blueSquare: UIView = {
         let view = UIView()
@@ -58,7 +59,6 @@ class ViewController: UIViewController {
         button.addTarget(self, action: #selector(animateSquareRight(sender:)), for: .touchUpInside)
         return button
     }()
-    
     lazy var animationTimeStepper: UIStepper = {
         let step = UIStepper()
         step.maximumValue = 5
@@ -67,14 +67,12 @@ class ViewController: UIViewController {
         step.addTarget(self, action: #selector(animateStepperPressed(sender:)), for: .touchUpInside)
         return step
     }()
-    
     lazy var animationTimeLabel: UILabel = {
         let label = UILabel()
         label.text = "duration"
         label.textAlignment = .center
         return label
     }()
-    
     lazy var distanceStepper: UIStepper = {
         let step = UIStepper()
         step.maximumValue = 100
@@ -83,7 +81,6 @@ class ViewController: UIViewController {
         step.addTarget(self, action: #selector(distanceStepperPressed(sender:)), for: .touchUpInside)
         return step
     }()
-    
     lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.text = "distance"
@@ -126,30 +123,46 @@ class ViewController: UIViewController {
     @IBAction func animateSquareUp(sender: UIButton) {
         let oldOffset = blueSquareCenterYConstraint.constant
         blueSquareCenterYConstraint.constant = oldOffset - CGFloat(distanceStepper.value)
-        UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
-            self.view.layoutIfNeeded()
+        if animationStyle != nil {
+            animationStylePicked(style: animationStyle ?? "curveEaseIn")
+        } else {
+            UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
+                self.view.layoutIfNeeded()
+            }
         }
     }
     
     @IBAction func animateSquareDown(sender: UIButton) {
         let oldOffset = blueSquareCenterYConstraint.constant
         blueSquareCenterYConstraint.constant = oldOffset + CGFloat(distanceStepper.value)
-        UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
-            self.view.layoutIfNeeded()
+        if animationStyle != nil {
+            animationStylePicked(style: animationStyle ?? "curveEaseIn")
+        } else {
+            UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
+                self.view.layoutIfNeeded()
+            }
         }
     }
     @IBAction func animateSquareLeft(sender: UIButton) {
         let oldOffset = blueSquareCenterXConstraint.constant
         blueSquareCenterXConstraint.constant = oldOffset - CGFloat(distanceStepper.value)
-        UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
-            self.view.layoutIfNeeded()
+        if animationStyle != nil {
+            animationStylePicked(style: animationStyle ?? "curveEaseIn")
+        } else {
+            UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
+                self.view.layoutIfNeeded()
+            }
         }
     }
     @IBAction func animateSquareRight(sender: UIButton) {
         let oldOffset = blueSquareCenterXConstraint.constant
         blueSquareCenterXConstraint.constant = oldOffset + CGFloat(distanceStepper.value)
-        UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
-            self.view.layoutIfNeeded()
+        if animationStyle != nil {
+            animationStylePicked(style: animationStyle ?? "curveEaseIn")
+        } else {
+            UIView.animate(withDuration: animationTimeStepper.value) { [unowned self] in
+                self.view.layoutIfNeeded()
+            }
         }
     }
     @IBAction func animateStepperPressed(sender: UIStepper) {
@@ -159,6 +172,25 @@ class ViewController: UIViewController {
     @IBAction func distanceStepperPressed(sender: UIStepper) {
         sender.value = distanceStepper.value
         distanceLabel.text = "distance: \(distanceStepper.value)"
+    }
+    private func animationStylePicked(style: String) {
+        if style == "curveEaseIn" {
+            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveEaseIn, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        } else if style == "curveEaseOut" {
+            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        } else if style == "repeat" {
+            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .repeat, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        } else if style == "curveLinear" {
+            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveLinear, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
     }
     
     private func addSubviews() {
@@ -272,7 +304,8 @@ class ViewController: UIViewController {
 }
 extension ViewController: AnimationStyleDelegate {
     func didSelectAnimationStyle(style: AnimationStyle.RawValue) {
-        <#code#>
+        animationStyle = style
+        
     }
     
     

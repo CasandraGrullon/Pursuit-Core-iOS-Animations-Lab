@@ -8,11 +8,11 @@
 
 import UIKit
 
-enum AnimationStyle: Int {
-    case curveEaseIn = 0
-    case curveEaseOut = 16
-    case repeated = 8
-    case curveLinear = 196608
+enum AnimationStyle: String {
+    case curveEaseIn = "curveEaseIn" //0
+    case curveEaseOut = "curveEaseOut" //16
+    case repeated = "repeat" //8
+    case curveLinear = "curveLinear" //196608
 }
 
 protocol AnimationStyleDelegate: AnyObject {
@@ -21,10 +21,10 @@ protocol AnimationStyleDelegate: AnyObject {
 
 class SettingsViewController: UIViewController {
     
-    private var animations = ["curveEaseIn", "curveEaseOut", "repeat", "curveLinear"]
+    private var animations = [AnimationStyle.curveEaseIn.rawValue, AnimationStyle.curveEaseOut.rawValue, AnimationStyle.repeated.rawValue, AnimationStyle.curveLinear.rawValue]
     
     public var selectedStyle: String?
-    public var animationStyle: Int?
+    //public var animationStyle: Int?
     
     weak var delegate: AnimationStyleDelegate?
     
@@ -66,20 +66,21 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let style = animations[row]
         selectedStyle = style
+        delegate?.didSelectAnimationStyle(style: style)
         
-        if selectedStyle == "curveEaseIn" {
-            animationStyle = AnimationStyle.curveEaseIn.rawValue
-            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
-        } else if selectedStyle == "curveEaseOut" {
-            animationStyle = AnimationStyle.curveEaseOut.rawValue
-            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
-        } else if selectedStyle == "repeat" {
-            animationStyle = AnimationStyle.repeated.rawValue
-            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
-        } else if selectedStyle == "curveLinear" {
-            animationStyle = AnimationStyle.curveLinear.rawValue
-            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
-        }
+//        if selectedStyle == "curveEaseIn" {
+//            animationStyle = AnimationStyle.curveEaseIn.rawValue
+//            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+//        } else if selectedStyle == "curveEaseOut" {
+//            animationStyle = AnimationStyle.curveEaseOut.rawValue
+//            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+//        } else if selectedStyle == "repeat" {
+//            animationStyle = AnimationStyle.repeated.rawValue
+//            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+//        } else if selectedStyle == "curveLinear" {
+//            animationStyle = AnimationStyle.curveLinear.rawValue
+//            delegate?.didSelectAnimationStyle(style: animationStyle ?? 0)
+//        }
         
     }
 }
