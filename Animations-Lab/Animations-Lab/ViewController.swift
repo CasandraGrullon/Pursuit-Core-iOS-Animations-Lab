@@ -174,20 +174,30 @@ class ViewController: UIViewController {
         distanceLabel.text = "distance: \(distanceStepper.value)"
     }
     private func animationStylePicked(style: String) {
-        if style == "curveEaseIn" {
-            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveEaseIn, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        } else if style == "curveEaseOut" {
-            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveEaseOut, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
+        if style == "transitionFlipFromLeft" {
+            if blueSquare.backgroundColor == .blue {
+                UIView.transition(with: blueSquare, duration: animationTimeStepper.value, options: [.transitionFlipFromLeft], animations: {
+                    self.blueSquare.backgroundColor = .systemPink
+                }, completion: nil)
+            } else {
+              UIView.transition(with: blueSquare, duration: animationTimeStepper.value, options: [.transitionFlipFromLeft], animations: {
+                    self.blueSquare.backgroundColor = .blue
+                }, completion: nil)
+            }
+            
+        } else if style == "transitionFlipFromRight" {
+            if blueSquare.backgroundColor == .blue {
+                UIView.transition(with: blueSquare, duration: animationTimeStepper.value, options: [.transitionFlipFromRight], animations: {
+                    self.blueSquare.backgroundColor = .systemPink
+                }, completion: nil)
+            } else {
+              UIView.transition(with: blueSquare, duration: animationTimeStepper.value, options: [.transitionFlipFromRight], animations: {
+                    self.blueSquare.backgroundColor = .blue
+                }, completion: nil)
+            }
+            
         } else if style == "repeat" {
             UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .repeat, animations: {
-                self.view.layoutIfNeeded()
-            }, completion: nil)
-        } else if style == "curveLinear" {
-            UIView.animate(withDuration: animationTimeStepper.value, delay: 0.0, options: .curveLinear, animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
         }
